@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
     public Motor CurrentMotor;
     public Animator Anim;
     public bool InPunch = false;
+    public bool InJump = false;
 
     public Vector3 currentDirection;
     public float xAxis;
@@ -34,21 +35,25 @@ public class PlayerController : MonoBehaviour {
                 StartCoroutine(Punch());
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !InJump)
         {
             CurrentMotor.Jump();
         }
-        
-	}
 
-    void OnCollisionEnter(Collision col)
-    {
-            Anim.SetBool("Jump", false);
+        Anim.SetBool("Jump", InJump);
+
     }
 
-    void OnCollisionExit(Collision col)
+    void OnTriggerEnter(Collider col)
     {
-        Anim.SetBool("Jump", true);
+        //Anim.SetBool("Jump", false);
+        InJump = false;
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        //Anim.SetBool("Jump", true);
+        InJump = true;
     }
 
     public void GetAxis()
