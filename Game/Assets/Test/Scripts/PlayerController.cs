@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Animator Anim;
     public bool InPunch = false;
     public bool InJump = false;
+    public GameObject DD;
 
     public Vector3 currentDirection;
     public float xAxis;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         Anim.SetBool("Jump", InJump);
+        DD.SetActive(InPunch);
 
     }
 
@@ -48,6 +50,9 @@ public class PlayerController : MonoBehaviour {
     {
         //Anim.SetBool("Jump", false);
         InJump = false;
+        //NA BUDUSHEE, CHISTA PO FANU
+        //if (col.tag == "Wolf")
+        //    Application.OpenURL("https://www.pornhub.com/");
     }
 
     void OnTriggerExit(Collider col)
