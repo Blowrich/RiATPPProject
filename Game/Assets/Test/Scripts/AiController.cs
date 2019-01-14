@@ -17,25 +17,37 @@ public class AiController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        
+
         if (target)
         {
-            motor.MoveTo(target.position);
-
-            if (Vector3.Distance(target.position, transform.position) > 15f)
+            Stats stats = target.GetComponentInChildren<Stats>();
+            if (stats.HP <= 0)
                 target = null;
-            if (Vector3.Distance(target.position, transform.position) < 2.1f)
+            if (target)
             {
-                
-                anim.SetBool("Attack", true);
-                if(!anim.GetBool("Dead"))
-                    FaceTarget();
-                dDealer.SetActive(true);
+                motor.MoveTo(target.position);
+
+                if (Vector3.Distance(target.position, transform.position) > 15f)
+                    target = null;
+                if (Vector3.Distance(target.position, transform.position) < 2.1f)
+                {
+
+                    anim.SetBool("Attack", true);
+                    if (!anim.GetBool("Dead"))
+                        FaceTarget();
+                    dDealer.SetActive(true);
+                }
+                else
+                {
+                    anim.SetBool("Attack", false);
+                    dDealer.SetActive(false);
+                }
             }
-            else
-            {
-                anim.SetBool("Attack", false);
-                dDealer.SetActive(false);
-            }
+        }
+        else
+        {
+            anim.SetBool("Attack", false);
         }
 
         anim.SetFloat("Walking", motor.agent.velocity.magnitude / motor.agent.speed, .1f, Time.deltaTime);
@@ -43,7 +55,8 @@ public class AiController : MonoBehaviour {
         if(stats.HP <= 0)
         {
             anim.SetBool("Dead", true);
-            Destroy(gameObject, 2.5f);
+            motor.agent.enabled = false;
+            Destroy(gameObject, 4f);
         }
         
 	}
@@ -53,6 +66,9 @@ public class AiController : MonoBehaviour {
         if(other.CompareTag("Player"))
         {
             target = other.transform;
+            Stats stats = target.GetComponentInChildren<Stats>();
+            if(stats.HP <= 0)
+                target = null;
         }
 	}
 

@@ -12,6 +12,9 @@ public class CamController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        transform.position = Vector3.Lerp(transform.position, Target.position, LerpTime);
+        if(Target) transform.position = Vector3.Lerp(transform.position, Target.position, LerpTime);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 	}
 }

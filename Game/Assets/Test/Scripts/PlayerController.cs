@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     public Motor CurrentMotor;
@@ -8,7 +9,8 @@ public class PlayerController : MonoBehaviour {
     public bool InPunch = false;
     public bool InJump = false;
     public GameObject DD;
-
+    public Stats stats;
+    public Text hpText;
     public Vector3 currentDirection;
     public float xAxis;
     public float yAxis;
@@ -21,7 +23,24 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        GetAxis();
+        
+        hpText.text = stats.HP.ToString("0.#");
+        if(stats.HP > 0)
+        {
+            GetAxis();
+
+            if (Input.GetMouseButton(0))
+            {
+                if (!InPunch)
+                    StartCoroutine(Punch());
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && !InJump)
+            {
+                CurrentMotor.Jump();
+            }
+        }
+
         if (xAxis != 0 || yAxis != 0)
         {
             Anim.SetBool("Walk", true);
@@ -30,20 +49,15 @@ public class PlayerController : MonoBehaviour {
         else
             Anim.SetBool("Walk", false);
 
-        if (Input.GetMouseButton(0))
-        {
-            if (!InPunch)
-                StartCoroutine(Punch());
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !InJump)
-        {
-            CurrentMotor.Jump();
-        }
 
         Anim.SetBool("Jump", InJump);
         DD.SetActive(InPunch);
-
+        if (stats.HP <= 0)
+        {
+            Anim.SetBool("Dead", true);
+            Destroy(gameObject, 3f);
+        }
     }
 
     void OnTriggerEnter(Collider col)
