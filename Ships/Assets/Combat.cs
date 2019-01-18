@@ -59,6 +59,11 @@ public class Combat : MonoBehaviour {
     {
         CanShotLeft = false;
         GameObject clone = Instantiate<GameObject>(BallPrefab, LeftWeapons.position, transform.rotation);
+        {
+            clone.AddComponent<SpecialBullet>();
+            clone.GetComponent<SpecialBullet>().MyHealth = GetComponentInChildren<HealthManager>();
+            clone.GetComponent<SpecialBullet>().MyTag = gameObject.tag;
+        }
         GameObject lk = Instantiate<GameObject>(ps1, LeftWeapons.position, transform.rotation);
         Destroy(lk, 2);
         clone.GetComponent<Rigidbody>().AddForce(-transform.right * ShotForce);

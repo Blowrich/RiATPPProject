@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour {
 	void LateUpdate () 
     {
         if(Target)
-            transform.position = Vector3.Lerp(transform.position, Target.position, 0.125f);
-	}
+            transform.position = Vector3.Lerp(transform.position, Target.position, 0.1115f);
+        else
+            Target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 }

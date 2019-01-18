@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         motor = GetComponent<Motor>();
         combat = GetComponent<Combat>();
 	}

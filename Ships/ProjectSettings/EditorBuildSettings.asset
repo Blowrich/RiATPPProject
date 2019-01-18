@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/MobileDepthWater/Scenes/DemoScene.unity
     guid: 56af498a20d7fb14ab9dd5bbde060f9d
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 71321d5c0ed61403cbd14953085faa60
+  - enabled: 1
+    path: Assets/Scenes/BattleField.unity
+    guid: 2876ca68e7ee5bb44bb5bb922659956c
   m_configObjects: {}

@@ -21,7 +21,12 @@ public class NpcController : MonoBehaviour {
         combat = GetComponent<Combat>();
         OceanOptimization = GameObject.FindGameObjectWithTag("Opt").GetComponent<OceanOptimization>();
         //newPoint = OceanOptimization.Waypoints[Random.Range(0, OceanOptimization.Waypoints.Length)].position;
-        motor.body.tag = gameObject.tag;
+        motor.body.tag = MyTag;
+
+        //SetParams
+        float inteleigence = Random.Range(0.9f, 1.1f);
+        motor.agent.speed *= inteleigence;
+        
 	}
 	
 	// Update is called once per frame
@@ -37,7 +42,13 @@ public class NpcController : MonoBehaviour {
             Patrooling();
         }
 
-        weapons.transform.localPosition = new Vector3(0, 0, -motor.agent.velocity.magnitude);
+        float Hypo = motor.agent.velocity.magnitude;
+        if (CurrentTarget)
+        {
+            float dist = Vector3.Distance(transform.position, CurrentTarget.transform.position);
+            Hypo = Mathf.Sqrt(motor.agent.velocity.magnitude * motor.agent.velocity.magnitude + dist * dist);
+        }
+        weapons.transform.localPosition = new Vector3(0, 0, -1f * (Hypo));
 
 	}
 
